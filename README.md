@@ -31,5 +31,5 @@ pkexec bash -c 'apt update && apt install -y php7.4-common php7.4-curl php7.4-xm
 Note: Install as local user!
 ```bash
 wget -O ~/.local/bin/tca https://github.com/devorto/thunar-custom-actions/releases/latest/download/tca.phar
-chmod ~/.local/bin/tca
+chmod +x ~/.local/bin/tca
 ```
