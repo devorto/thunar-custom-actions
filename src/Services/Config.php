@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use DateTime;
+use RuntimeException;
 
 /**
  * Persistent configuration between runs.
@@ -19,16 +20,30 @@ class Config
      */
     public function __construct()
     {
+        $home = filter_input(INPUT_SERVER, 'HOME');
+        if (empty($home)) {
+            throw new RuntimeException('Environment $HOME not set.');
+        }
+
         // Default config
         $this->config = [
-            'config_path' => $_SERVER['HOME'] . '/.config/thunar-custom-actions',
-            'config_file' => $_SERVER['HOME'] . '/.config/thunar-custom-actions/config.json',
-            'phar_path' => $_SERVER['HOME'] . '/.local/bin/tca',
-            'icon_path' => $_SERVER['HOME'] . '/.config/thunar-custom-actions/icons',
-            'tca_file' => $_SERVER['HOME'] . '/.config/Thunar/uca.xml',
+            'config_path' => $home . '/.config/thunar-custom-actions',
+            'config_file' => $home . '/.config/thunar-custom-actions/config.json',
+            'phar_path' => $home . '/.local/bin/tca',
+            'icon_path' => $home . '/.config/thunar-custom-actions/icons',
+            'tca_file' => $home . '/.config/Thunar/uca.xml',
             'recheck-for-updates' => (new DateTime())->format('Y-m-d H:i:s')
         ];
 
+        // Create folders.
+        if (!file_exists($this->config['config_path'])) {
+            mkdir($this->config['config_path'], 0777, true);
+        }
+        if (!file_exists($this->config['icon_path'])) {
+            mkdir($this->config['icon_path']);
+        }
+
+        // Parse config json file or create if not exists.
         if (file_exists($this->config['config_file'])) {
             $json = json_decode(file_get_contents($this->config['config_file']), true);
             if (json_last_error() !== JSON_ERROR_NONE) {
@@ -36,11 +51,7 @@ class Config
                     $this->config[$key] = $value;
                 }
             }
-        } elseif (is_writable(basename($this->config['config_path']))) {
-            if (!file_exists($this->config['config_path'])) {
-                mkdir($this->config['config_path']);
-            }
-
+        } else {
             file_put_contents($this->config['config_file'], json_encode($this->config, JSON_PRETTY_PRINT));
         }
     }
@@ -78,9 +89,7 @@ class Config
     public function set(string $key, string $value): Config
     {
         $this->config[$key] = $value;
-        if (is_writable($this->config['config_path'])) {
-            file_put_contents($this->config['config_file'], json_encode($this->config, JSON_PRETTY_PRINT));
-        }
+        file_put_contents($this->config['config_file'], json_encode($this->config, JSON_PRETTY_PRINT));
 
         return $this;
     }
