@@ -11,7 +11,7 @@ use Symfony\Component\Console\Application;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // Note: Make sure version always matches the latest tag for self-update command.
-$app = new Application('Thunar Custom Actions', '1.0.4');
+$app = new Application('Thunar Custom Actions', '1.0.5');
 
 $commands = [
     Update::class,

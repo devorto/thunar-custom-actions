@@ -142,19 +142,19 @@ class Install extends BaseCommand
                 $actions->appendChild($action);
 
                 $icon = $xml->createElement('icon');
-                $icon->nodeValue = $data['icon'];
+                $icon->appendChild($xml->createTextNode($data['icon']));
                 $action->appendChild($icon);
 
                 $name = $xml->createElement('name');
-                $name->nodeValue = $data['name'];
+                $name->appendChild($xml->createTextNode($data['name']));
                 $action->appendChild($name);
 
                 $command = $xml->createElement('command');
-                $command->nodeValue = $data['command'];
+                $command->appendChild($xml->createTextNode($data['command']));
                 $action->appendChild($command);
 
                 $patterns = $xml->createElement('patterns');
-                $patterns->nodeValue = $data['patterns'];
+                $patterns->appendChild($xml->createTextNode($data['patterns']));
                 $action->appendChild($patterns);
 
                 if ($data['startup-notify']) {
