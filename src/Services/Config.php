@@ -20,7 +20,7 @@ class Config
      */
     public function __construct()
     {
-        $home = filter_input(INPUT_SERVER, 'HOME');
+        $home = $_SERVER['HOME'] ?? null;
         if (empty($home)) {
             throw new RuntimeException('Environment $HOME not set.');
         }
