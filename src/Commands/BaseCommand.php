@@ -79,6 +79,6 @@ abstract class BaseCommand extends Command
             return;
         }
 
-        exec(sprintf("xterm -maximized pkexec bash -c 'apt update && apt install -y %s'", $package ?? $application));
+        exec(sprintf("pkexec bash -c 'apt update && apt install -y %s'", $package ?? $application));
     }
 }
