@@ -82,7 +82,7 @@ class Split extends BaseCommand implements Thunar
 
         $outputDirectory = dirname($file) . DIRECTORY_SEPARATOR . basename($file, '.cue');
         if (file_exists($outputDirectory)) {
-            $this->yad->error(sprintf('Directory "%s" already exists.', basename($outputDirectory)));
+            $this->yad->error(sprintf('Directory "%s" already exists.', basename($outputDirectory, '.cue')));
         }
 
         mkdir($outputDirectory);

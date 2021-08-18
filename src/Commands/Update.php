@@ -78,8 +78,8 @@ class Update extends BaseCommand
         }
 
         $path = $this->config->get('phar_path');
-        if (!is_writable(basename($path))) {
-            $this->yad->error(sprintf('Directory %s is not writeable.', basename($path)));
+        if (!is_writable(dirname($path))) {
+            $this->yad->error(sprintf('Directory %s is not writeable.', dirname($path)));
             $this->config->set('recheck-for-updates', (new DateTime('+1 hour'))->format('Y-m-d H:i:s'));
 
             return 1;
