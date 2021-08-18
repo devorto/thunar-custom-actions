@@ -48,7 +48,7 @@ class Yad
     public function question(string $text, string $title = 'Question'): bool
     {
         $command = sprintf(
-            'yad --title=%s --text=%s --button=gtk-yes:0 --button:gtk-no:1',
+            'yad --title=%s --text=%s --button=gtk-yes:0 --button=gtk-no:1',
             escapeshellarg($title),
             escapeshellarg($text)
         );

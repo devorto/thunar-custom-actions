@@ -49,7 +49,7 @@ class Update extends BaseCommand
 
         if (empty($json) || $status !== 200) {
             /**
-             * Something went wrong, maybe no internet connection or github down?
+             * Something went wrong, maybe no internet connection or GitHub down?
              * Anyhow, checking for updates is not so important that program has to die imho,
              * so just try again in the future.
              */
