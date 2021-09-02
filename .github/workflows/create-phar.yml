@@ -1,10 +1,7 @@
 name: Deploy
 on:
-  push:
-    branches:
-      - "!*"
-    tags:
-      - '*'
+  release:
+    types: [published]
 jobs:
   job-1:
     name: Generate Phar File

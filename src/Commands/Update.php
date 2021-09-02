@@ -30,7 +30,7 @@ class Update extends BaseCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $curl = curl_init('https://api.github.com/repos/devorto/thunar-custom-actions/releases/latest');
+        $curl = curl_init('https://api.github.com/repos/devorto/thunar-custom-actions/releases');
         curl_setopt_array(
             $curl,
             [
@@ -63,6 +63,9 @@ class Update extends BaseCommand
         if (json_last_error() !== JSON_ERROR_NONE) {
             return 1;
         }
+
+        // Get latest release.
+        $json = array_shift($json);
 
         if ($json['tag_name'] === $this->getApplication()->getVersion() || $json['draft'] || empty($json['assets'])) {
             $this->config->set('recheck-for-updates', (new DateTime('+1 hour'))->format('Y-m-d H:i:s'));

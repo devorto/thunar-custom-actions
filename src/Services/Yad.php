@@ -57,4 +57,19 @@ class Yad
 
         return $result == 0;
     }
+
+    /**
+     * @param string $title
+     *
+     * @return string|null
+     */
+    public function askPassword(string $title = 'Password?'): ?string
+    {
+        $command = sprintf(
+            'yad --entry --title="%s" --entry-text=Password --hide-text',
+            $title
+        );
+
+        return trim(shell_exec($command)) ?: null;
+    }
 }
